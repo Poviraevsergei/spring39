@@ -1,24 +1,43 @@
 package com.tms;
 
-import org.springframework.context.annotation.Bean;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
-@Component("romaBean") //создай объект класса и помести в контейнер
+@Component(value = "beanUser")
 public class User {
-    public int id;
-    public String name;
+    private int id;
+    private String name;
 
-    public User() {
-
+    public String printMyName(){
+        System.out.println(name);
+        //System.out.println(10/0); // выпадет ArithmeticException
+        return name;
     }
 
-    public User(int id, String name) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    @Bean("abrahamBean") //Кладет объект который возвращает метод в Контейнер
-    public User createAbraham(){
-        return new User(3, "Abraham");
+    @PostConstruct //init метода
+    public void init() {
+        System.out.println("Создается User Bean!");
+    }
+
+    @PreDestroy //*
+    public void destroy() {
+        System.out.println("Сносит User Bean!");
     }
 }

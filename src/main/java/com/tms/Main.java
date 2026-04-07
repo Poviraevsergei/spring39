@@ -1,18 +1,46 @@
 package com.tms;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+@EnableAspectJAutoProxy // включает AOP
+@ComponentScan("com.tms") //явно просим спринг просканировать этот package и все вложенные
 public class Main {
     public static void main(String[] args) {
-        //1. Создаем IoC Container - ApplicationContext(Spring interface)
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.tms");
-
-        //2. создать объект и положить в контейнер. По просьбе вернуть объект.
-        //applicationContext.getBean(com.tms.User.class);
-        User romaFromContainer = applicationContext.getBean("abrahamBean", User.class);
-
-        System.out.println(romaFromContainer.id);
-        System.out.println(romaFromContainer.name);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Main.class);
+        User user = applicationContext.getBean(User.class);
+        user.setName("Dimas");
+        user.printMyName();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
