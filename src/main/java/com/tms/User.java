@@ -1,5 +1,6 @@
 package com.tms;
 
+import com.tms.aspects.LogAop;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
@@ -8,11 +9,20 @@ import org.springframework.stereotype.Component;
 public class User {
     private int id;
     private String name;
+    private int age;
 
-    public String printMyName(){
+    public void printMyName(){
         System.out.println(name);
-        //System.out.println(10/0); // выпадет ArithmeticException
-        return name;
+        printMyId();
+    }
+
+    public void printMyId(){
+        System.out.println(id);
+        printMyAge();
+    }
+
+    public void printMyAge(){
+        System.out.println(age);
     }
 
     public int getId() {

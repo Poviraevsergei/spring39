@@ -2,7 +2,6 @@ package com.tms.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AdviceName;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -12,15 +11,18 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Aspect
 @Component
 public class MyAspect {
 
-    @Pointcut("execution(void *My*())")
-    public void myRegexPointcut(){}
+    @Pointcut("within(com.tms.User)")
+    public void myRegexPointcut() {
+    }
 
     //Pointcut - места к которым будет применяться аспект
-    //@Pointcut("within(com.tms.User)") // описываем путь package
+    //@Pointcut("within(com.tms.*)") // описываем путь package
     //@Pointcut("@annotation(com.tms.aspects.LogAop)") // описываем аннотацию
     //@Pointcut("execution(void *My*())") // описываем сигнатуру метода
     @Before("myRegexPointcut()") //Advice + Pointcut
@@ -44,14 +46,12 @@ public class MyAspect {
         System.out.println("Aspect AfterReturning method: " + result);
     }
 
-    @Around(value = "myRegexPointcut()")
+    @Around("within(com.tms.User)")
     public Object printAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("Around method start");
+        System.out.println(LocalDateTime.now() + " IN: " + joinPoint.getSignature().getName());
         Object result = joinPoint.proceed();
-        System.out.println("Around method end");
+        System.out.println(LocalDateTime.now() + " OUT: " + joinPoint.getSignature().getName());
         return result;
     }
-
 }
-//TODO: @Annotation, проблемы AOP(вложенные методы), принцип работы
 

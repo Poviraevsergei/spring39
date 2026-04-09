@@ -10,8 +10,8 @@ public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Main.class);
         User user = applicationContext.getBean(User.class);
-        user.setName("Dimas");
         user.printMyName();
+        user.printMyId();
     }
 }
 
